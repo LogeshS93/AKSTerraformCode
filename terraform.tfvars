@@ -1,0 +1,7 @@
+rg_name = "iib-tf-aks-lab-rg"
+rg_location = "uksouth"
+service_principal_name = "iib-tf-aks-lab-spn"
+service_principal_role = "Contributor"
+key_vault_name = "iib-tf-aks-lab-kvt"
+container_registry_name = "iibTfAksLabAcr"
+aks_cluster_name = "iib-tf-aks-lab-akscluster"
