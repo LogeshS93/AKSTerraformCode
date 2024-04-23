@@ -8,5 +8,5 @@ provider "azurerm" {
 }
 
 provider "azuread" {
-  tenant_id = "6faxxxxxxxxxxxxxxxxxx4946"
+  tenant_id = "6fac95a1-8c96-45ad-80a8-a088cf054946"
 }

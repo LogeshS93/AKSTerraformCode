@@ -1,0 +1,59 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+ none
+
+pool:
+  name: iibpool02
+
+variables:
+- group: lab-variables
+
+stages:
+- stage: Plan
+  displayName: 'Terraform Plan'
+  jobs:
+  - job: TerraformPlan
+    displayName: 'Terraform Plan'
+    steps:
+    - script: |
+        terraform --version
+        terraform init -backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="key=$(key)" -backend-config="access_key=$(accessKey)"
+        terraform plan -out tfplan
+      displayName: 'Terraform Init and Plan'
+
+
+- stage: Validate
+  displayName: 'Manual check before apply'
+  jobs:
+  - job: waitForValidation
+    displayName: Wait for external validation
+    pool: server
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        notifyUsers: |
+          logesh9310@gmail.com
+        instructions: 'Please validate the build configuration and resume'
+        onTimeout: 'resume'
+
+- stage: Deploy
+  displayName: 'Terraform Apply'
+  jobs:
+  - job: TerraformApply
+    displayName: 'Terraform Apply'
+    steps:
+    - script: |
+        terraform --version
+        terraform init -backend-config="storage_account_name=$(storageAccountName)" -backend-config="container_name=$(containerName)" -backend-config="key=$(key)" -backend-config="access_key=$(accessKey)"
+        terraform plan -out tfplan
+        terraform apply -auto-approve tfplan
+      displayName: 'Terraform Init and Apply'
+
+
+

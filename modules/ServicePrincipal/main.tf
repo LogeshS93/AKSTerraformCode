@@ -20,8 +20,8 @@ data "azurerm_client_config" "spn" {
 }
 
 resource "azurerm_role_assignment" "spn" {
+  for_each             = toset(local.multi_roles)
   scope                = data.azurerm_subscription.primary.id
-  role_definition_name = var.service_principal_role
+  role_definition_name = each.value
   principal_id         = azuread_service_principal.spn.object_id
 }
-

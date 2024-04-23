@@ -13,11 +13,6 @@ variable "service_principal_name" {
   description = "name of the service principal"
 }
 
-variable "service_principal_role" {
-  type = string
-  description = "Role of the service principal"
-}
-
 variable "key_vault_name" {
   type = string
 }

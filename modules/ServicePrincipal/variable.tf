@@ -3,8 +3,6 @@ variable "service_principal_name" {
   description = "name of the service principal"
 }
 
-variable "service_principal_role" {
-  type = string
-  description = "Role of the service principal"
+locals {
+  multi_roles=["Contributor","Key Vault Administrator"]
 }
-

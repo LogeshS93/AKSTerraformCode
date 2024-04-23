@@ -9,7 +9,6 @@ resource "azurerm_resource_group" "rg1" {
 module "service_principal" {
   source                 = "./modules/ServicePrincipal"
   service_principal_name = var.service_principal_name
-  service_principal_role = var.service_principal_role
 
   depends_on = [
     azurerm_resource_group.rg1
